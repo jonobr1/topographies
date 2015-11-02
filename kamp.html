@@ -1,0 +1,105 @@
+
+<html>
+
+    
+<head>
+  <script src='./third-party/gibber.audio.lib.js'></script>
+  <!-- <script src='./build/gibber.lib.js'></script> -->
+</head>
+
+<body>
+</body>
+
+<script>
+    
+    
+
+
+
+    Gibber.init()
+    
+    
+    
+    window.addEventListener('mousemove', function(e) {
+        var y = e.clientY / window.innerHeight;
+        Clock.rate = y * 2;
+    });
+// Clock.rate = Mouse.y
+
+    
+    bus1 = Bus().fx.add( Reverb({ roomSize:1.0, damping:0.7 }))
+    
+   // Clock.rate = 0.87
+
+
+    //Gibber.scale.root.seq( ['c4', 'd4', 'g4', 'a3', 'f4', 'e4',], [4,4,2].random() )
+    //Gibber.scale.mode.seq( ['Minor', 'Major',], [8,8,1,2].random() )
+    //Gibber.scale.mode.seq( ['Minor', 'Major',], [8].random() )
+
+Gibber.scale.root.seq( ['c4', 'db4', 'e4', 'eb4'], [4].random() )
+
+
+    
+    //Gibber.scale.mode = 'Major'
+    //Gibber.scale.mode = 'Dorian'
+    //Gibber.scale.mode = 'Mixolydian'
+    
+    
+    d = FM( 'glockenspiel' )
+
+    .note.seq([0, 2, 4, 6, 8], [1/4] )
+    .fx.add( Reverb() )
+    d.amp = 0.6
+    d.octave = 0
+    d.decay = 16050
+    d.pan = 0.7
+    d.send(bus1, .3 )
+    d.fx.add(Tremolo({ amp: 0.1, frequency:5 }))
+
+
+
+
+
+e = FM( 'glockenspiel' )
+.note.seq([0, 2, 4, 6, 8], [1/8,1/16,1/16,1/16] )
+e.octave = 1
+e.amp = 0.05
+e.pan = -0.7
+
+
+
+
+f = FM( 'brass' )
+.note.seq([0, 2, 4, 0].random(), [1, 1, 1, 1, 1, 1, 1, 1/2, 1/4, 1/4,] )
+f.octave = 0
+f.pan = 0.8
+f.amp = 0.05
+f.send(bus1, .5 )
+f.fx.add(Tremolo({ amp: 0.2, frequency:6 }))
+
+
+h = FM( 'brass' )
+.note.seq([0, 2, 4, 0].random(), [1, 1, 1, 1, 1, 1, 1, 1/2, 1/4, 1/4,] )
+h.octave = -1
+h.pan = -0.8
+h.amp = 0.05
+h.send(bus1, .5 )
+
+
+
+g = FM( 'glockenspiel' )
+.note.seq([1, 4, 7], [1/4, 1/8, 1/16 ].random(1/4,2, 1/8,2, 1/16,4 ))
+g.octave = 2
+g.amp = 0.01
+g.pan = 0
+g.decay = 20050
+
+g.fx.add(Vibrato({ rate: 0.5 }))
+g.send(bus1, .2 )
+
+
+
+
+</script>
+
+</html>
