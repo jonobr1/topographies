@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Streams</title>
+  </head>
+  <body>
+    <div class="scripts">
+      <script src="./third-party/three.js"></script>
+      <script src="./src/stream.js"></script>
+      <script>
+
+        var width, height;
+
+        var renderer = new THREE.WebGLRenderer({ antialias: true });
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(60)
+        var clock = new THREE.Clock();
+
+        var stream = new THREE.Stream();
+
+        function setup() {
+
+          scene.add(stream);
+          camera.position.z = 10;
+          camera.lookAt(new THREE.Vector3());
+
+          renderer.domElement.style.position = 'absolute';
+          renderer.domElement.style.display = 'block';
+          renderer.domElement.style.top = 0;
+          renderer.domElement.style.left = 0;
+
+          document.body.appendChild(renderer.domElement);
+          window.addEventListener('resize', resize, false);
+          resize();
+          loop();
+
+        }
+
+        function resize() {
+
+          width = window.innerWidth;
+          height = window.innerHeight;
+
+          renderer.setSize(width, height);
+          camera.aspect = width / height;
+          camera.updateProjectionMatrix();
+
+        }
+
+        function loop() {
+
+          requestAnimationFrame(loop);
+
+          var t = clock.getElapsedTime() * 2;
+          var l = stream.leaders.length;
+
+          for (var i = 0; i < l; i++) {
+
+            var v = stream.leaders[i];
+            var r = ((i + 1) % 25) / 5;
+            var p = t + Math.PI * 2 * (i / l);
+
+            v.x = r * Math.cos(p);
+            v.y = r * Math.sin(p);
+
+          }
+
+          stream.update();
+          renderer.render(scene, camera);
+
+        }
+
+        setup();
+
+      </script>
+    </div>
+  </body>
+</html>

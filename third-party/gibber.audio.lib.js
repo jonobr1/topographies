@@ -2131,11 +2131,11 @@ Create a callback and start it running. Note that in iOS audio callbacks can onl
         bufferSize = typeof arguments[0] === 'undefined' ? 1024 : arguments[0], 
         audioContext,
         start
-    
-    if( typeof webkitAudioContext !== 'undefined' ) {
-      audioContext = webkitAudioContext
-    }else if ( typeof AudioContext !== 'undefined' ) {
+
+    if ( typeof AudioContext !== 'undefined' ) {
       audioContext = AudioContext
+    } else if( typeof webkitAudioContext !== 'undefined' ) {
+      audioContext = webkitAudioContext
     }
 
     // we will potentially delay start of audio until touch of screen for iOS devices

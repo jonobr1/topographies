@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Topographies</title>
+  </head>
+  <body>
+    <div class="scripts">
+      <script src="./third-party/jquery.js"></script>
+      <script src="./third-party/gibber.audio.lib.js"></script>
+      <script src="./src/topographies.js"></script>
+      <script>
+
+        Topographies.init();
+
+        var a = FM('glockenspiel')
+          .note.seq([0, 2, 4, 6, 8], [1 / 4])
+          .fx.add(new Reverb());
+
+        a.amp = 0.6;
+        a.octave = 0;
+        a.decay = 16050;
+        a.pan = 0.7;
+        a.send(Topographies.Bus, 0.3);
+        a.fx.add(new Tremolo({ amp: 0.1, frequency: 5 }));
+
+        var b = FM('glockenspiel')
+          .note.seq([0, 2, 4, 6, 8], [1 / 8 , 1 / 16, 1 / 16, 1 / 16]);
+
+        b.octave = 1;
+        b.amp = 0.05;
+        b.pan = - 0.7;
+        b.send(Topographies.Bus);
+
+        c = FM( 'brass' )
+          .note.seq([0, 2, 4, 0].random(), [1, 1, 1, 1, 1, 1, 1, 1 / 2, 1 / 4, 1 / 4]);
+
+        c.octave = 0;
+        c.pan = 0.8;
+        c.amp = 0.05;
+        c.send(Topographies.Bus, 0.5);
+        c.fx.add(Tremolo({ amp: 0.2, frequency:6 }))
+
+        d = FM( 'brass' )
+          .note.seq([0, 2, 4, 0].random(), [1, 1, 1, 1, 1, 1, 1, 1 / 2, 1 / 4, 1 / 4]);
+
+        d.octave = - 1;
+        d.pan = - 0.8;
+        d.amp = 0.05;
+        d.send(Topographies.Bus, 0.5);
+
+        e = FM( 'glockenspiel' )
+          .note.seq([1, 4, 7], [1 / 4, 1 / 8, 1 / 16].random(1 / 4, 2, 1 / 8, 2, 1 / 16, 4));
+
+        e.octave = 2;
+        e.amp = 0.01;
+        e.pan = 0;
+        e.decay = 20050;
+        e.fx.add(new Vibrato({ rate: 0.5 }));
+        e.send(Topographies.Bus, .2);
+
+        var line = new Topographies.Line(a, b, c, d, e);
+
+      </script>
+    </div>
+  </body>
+</html>

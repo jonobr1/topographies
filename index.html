@@ -6,11 +6,29 @@
   </head>
   <body>
     <div class="scripts">
+      <script src="./third-party/jquery.js"></script>
       <script src="./third-party/gibber.audio.lib.js"></script>
       <script src="./src/topographies.js"></script>
       <script>
 
-        
+        Topographies.init();
+
+        var a = new FM('glockenspiel');
+        a.note.seq([0, 2, 4, 6, 8], [1 / 4]);
+
+        a.octave = 0; // Change a property
+        a.send(Topographies.Bus);
+
+        var line = new Topographies.Line(a);  // Serializes properties into the base State
+        var state = new Topographies.State(); // Create a new State
+
+        line.duration = 12; // A cycle takes 12 beats.
+        state.addProperty(a, { octave: 2 });  // Change the octave after 4 beats
+        line.addState(state);
+
+        state = new Topographies.State();
+        state.addProperty(a, { amp: 1.5 }); // Change the amplitude after 8 beats
+        line.addState(state);
 
       </script>
     </div>
